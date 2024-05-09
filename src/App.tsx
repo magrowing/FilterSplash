@@ -1,9 +1,16 @@
-function App() {
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import { routes } from './routes';
+
+import { Reset } from 'styled-reset';
+
+const router = createBrowserRouter(routes);
+
+export default function App() {
   return (
-    <>
-      <p>테스트 입니다.</p>
-    </>
+    <main>
+      <Reset />
+      <RouterProvider router={router} />
+    </main>
   );
 }
-
-export default App;
