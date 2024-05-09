@@ -6,10 +6,10 @@ import { routes } from './routes';
 
 import { Reset } from 'styled-reset';
 
-import '../public/css/font.css';
-
 import GlobalStyle from './styles/GlobalStyle';
 import defaultTheme from './styles/defaultTheme';
+
+import './App.css';
 
 const router = createBrowserRouter(routes);
 const theme = defaultTheme;

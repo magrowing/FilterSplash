@@ -2,7 +2,7 @@
   font-family: 'Pretendard Std';
   font-weight: 700;
   font-display: swap;
-  src: url(../fonts/PretendardStd-Bold.woff) format('woff');
+  src: url(/fonts/PretendardStd-Bold.woff) format('woff');
 }
 
 
@@ -10,5 +10,5 @@
   font-family: 'Pretendard Std';
   font-weight: 400;
   font-display: swap;
-  src: url(../fonts/PretendardStd-Regular.woff) format('woff');
+  src: url(/fonts/PretendardStd-Regular.woff) format('woff');
 }
