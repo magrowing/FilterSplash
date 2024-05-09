@@ -15,6 +15,7 @@ export default defineConfig({
       '@apis' : fileURLToPath(new URL('./src/apis', import.meta.url)),
       '@firebase' : fileURLToPath(new URL('./src/firebase', import.meta.url)),
       '@utils' : fileURLToPath(new URL('./src/utils', import.meta.url)),
+      '@styles' : fileURLToPath(new URL('./src/styles', import.meta.url)),
     }
   }, 
 })
