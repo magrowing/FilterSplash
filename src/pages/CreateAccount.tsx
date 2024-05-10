@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 
@@ -7,8 +7,11 @@ import { FirebaseError } from 'firebase/app';
 import { createUser } from '../firebase/firebaseApi';
 
 import TextField from '../components/form/TextField';
+import Button from '../components/ui/Button';
 import ErrorBox from '../components/form/ErrorBox';
 import LoadingScreen from '../components/LoadingScreen';
+
+import { initFormState } from '../types/form/auth';
 
 import {
   booleanChk,
@@ -19,60 +22,56 @@ import {
 } from '../utils/validation';
 
 const FormWrapper = styled.article`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 102.4rem;
+  height: 100vh;
   margin: 0 auto;
-`;
-
-const TitleSection = styled.section``;
-
-const Image = styled.img`
-  width: 100%;
 `;
 
 const Title = styled.h2`
   width: 100%;
-  max-width: 102.4rem;
-  margin: 0 auto;
   font-size: ${(props) => props.theme.fonts.headingMedium};
   font-weight: ${(props) => props.theme.fonts.weightBold};
+  margin: ${(props) => props.theme.spacing.spacing3} auto
+    ${(props) => props.theme.spacing.spacing1};
 `;
 
-const Form = styled.form``;
+const ImageBox = styled.figure`
+  width: 9rem;
+  margin: 0 auto;
+  img {
+    width: 100%;
+  }
+`;
+
+const Switcher = styled.p`
+  text-align: center;
+  vertical-align: middle;
+  a {
+    color: ${(props) => props.theme.colors.base};
+    text-decoration: underline;
+    font-weight: ${(props) => props.theme.fonts.weightMedium};
+  }
+`;
 
 export default function CreateAccount() {
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
+  const [email, setEmail] = useState(initFormState);
+  const [name, setName] = useState(initFormState);
+  const [password, setPassword] = useState(initFormState);
+  const [passwordChk, setPasswordChk] = useState(initFormState);
+
   const navigation = useNavigate();
-
-  const [email, setEmail] = useState({
-    text: '',
-    isVaild: false,
-    message: '',
-  });
-
-  const [name, setName] = useState({
-    text: '',
-    isVaild: false,
-    message: '',
-  });
-
-  const [password, setPassword] = useState({
-    text: '',
-    isVaild: false,
-    message: '',
-  });
-
-  const [passwordChk, setPasswordChk] = useState({
-    text: '',
-    isVaild: false,
-    message: '',
-  });
 
   const changeEmail = (value: string) => {
     setEmail({
       text: value,
-      isVaild: booleanChk(emailValidationCheck(value)),
+      isValid: booleanChk(emailValidationCheck(value)),
       message: emailValidationCheck(value),
     });
   };
@@ -80,7 +79,7 @@ export default function CreateAccount() {
   const changeName = (value: string) => {
     setName({
       text: value,
-      isVaild: booleanChk(nameValidationCheck(value)),
+      isValid: booleanChk(nameValidationCheck(value)),
       message: nameValidationCheck(value),
     });
   };
@@ -88,7 +87,7 @@ export default function CreateAccount() {
   const changePassword = (value: string) => {
     setPassword({
       text: value,
-      isVaild: booleanChk(passwordValidationCheck(value)),
+      isValid: booleanChk(passwordValidationCheck(value)),
       message: passwordValidationCheck(value),
     });
   };
@@ -96,7 +95,7 @@ export default function CreateAccount() {
   const changePasswordChk = (value: string) => {
     setPasswordChk({
       text: value,
-      isVaild: booleanChk(passwordValidationMatchCheck(value, password.text)),
+      isValid: booleanChk(passwordValidationMatchCheck(value, password.text)),
       message: passwordValidationMatchCheck(value, password.text),
     });
   };
@@ -130,18 +129,23 @@ export default function CreateAccount() {
 
   return (
     <FormWrapper>
-      <TitleSection>
-        <Image src="" alt="logo" />
-        <Title>회원가입</Title>
-      </TitleSection>
-      <Form onSubmit={onsubmit}>
+      <div>
+        <ImageBox>
+          <img src="/images/logo.svg" alt="logo" />
+        </ImageBox>
+        <Title>FilterSplash 회원가입</Title>
+        <Switcher>
+          이미 계정이 있으신가요? <Link to="/login">로그인</Link>
+        </Switcher>
+      </div>
+      <form onSubmit={onsubmit}>
         <TextField
           label="이메일"
           type="text"
-          name="email"
+          name="text"
           placeholder="email@mail.com"
           value={email.text}
-          isVaild={email.isVaild}
+          isValid={email.isValid}
           message={email.message}
           onChange={changeEmail}
         />
@@ -151,7 +155,7 @@ export default function CreateAccount() {
           name="name"
           placeholder="사용자 이름을 입력해주세요."
           value={name.text}
-          isVaild={name.isVaild}
+          isValid={name.isValid}
           message={name.message}
           onChange={changeName}
         />
@@ -161,7 +165,7 @@ export default function CreateAccount() {
           name="password"
           placeholder="비밀번호를 입력해주세요."
           value={password.text}
-          isVaild={password.isVaild}
+          isValid={password.isValid}
           message={password.message}
           onChange={changePassword}
           isShowPw={true}
@@ -172,14 +176,14 @@ export default function CreateAccount() {
           name="passwordChk"
           placeholder="비밀번호를 다시 한번 입력해주세요."
           value={passwordChk.text}
-          isVaild={passwordChk.isVaild}
+          isValid={passwordChk.isValid}
           message={passwordChk.message}
           onChange={changePasswordChk}
           isShowPw={true}
         />
         {error !== '' && <ErrorBox text={error} />}
-        <button type="submit">회원가입</button>
-      </Form>
+        <Button type="submit" text={'회원가입'} />
+      </form>
       {isLoading && <LoadingScreen />}
     </FormWrapper>
   );

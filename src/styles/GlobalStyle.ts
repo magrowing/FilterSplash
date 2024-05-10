@@ -30,10 +30,16 @@ const GlobalStyle = createGlobalStyle`
   textarea,
   select,
   button {
+    outline: none;
+    border: none;
     font-size: 1.6rem;
     background-color: transparent;
     color: ${(props) => props.theme.colors.primary};
     font-family:'Pretendard Std',system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  button{
+    cursor: pointer;
   }
 
   :lang(ko) {

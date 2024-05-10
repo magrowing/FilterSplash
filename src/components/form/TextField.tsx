@@ -1,16 +1,73 @@
 import { useRef, useState } from 'react';
 
-type TextFieldProps = {
-  label: string;
-  type: string;
-  name: string;
-  placeholder: string;
-  value: string;
-  isVaild: boolean;
-  message: string;
-  onChange: (value: string) => void;
-  isShowPw?: boolean;
-};
+import styled, { css } from 'styled-components';
+
+import {
+  InputProps,
+  PasswordIconBtnProps,
+  TextFieldProps,
+} from '../../types/form/textField';
+
+const FieldWrapper = styled.div`
+  width: 40rem;
+  margin-top: 1.2rem;
+`;
+
+const FieldBox = styled.div`
+  position: relative;
+`;
+
+const Label = styled.label`
+  display: block;
+  font-size: ${(props) => props.theme.fonts.bodyMedium};
+  margin-bottom: 1rem;
+`;
+
+const Input = styled.input<InputProps>`
+  width: 100%;
+  height: 4rem;
+  padding: 1rem;
+  border: 1px solid ${(props) => props.theme.colors.base};
+  border-radius: ${(props) => props.theme.shape.small};
+
+  &::placeholder {
+    color: ${(props) => props.theme.colors.base};
+  }
+
+  &:focus {
+    border-color: ${(props) =>
+      props.visible
+        ? props.theme.colors.danger
+        : props.theme.colors.information};
+  }
+`;
+
+const PasswordIconBtn = styled.button<PasswordIconBtnProps>`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  width: 4rem;
+  height: 4rem;
+  font-size: 0;
+  outline: none;
+  background-image: url('/images/icon_password.svg');
+  background-position: 0rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  ${(props) =>
+    props.active &&
+    css`
+      background-position: -4rem 0;
+    `}
+`;
+
+const ValidationMsg = styled.p`
+  color: ${(props) => props.theme.colors.dangerText};
+  font-size: ${(props) => props.theme.fonts.bodySmall};
+  margin-top: 0.6rem;
+`;
 
 function TextField({
   label,
@@ -18,7 +75,7 @@ function TextField({
   name,
   placeholder,
   value,
-  isVaild,
+  isValid,
   message,
   onChange,
   isShowPw,
@@ -38,25 +95,30 @@ function TextField({
   };
 
   return (
-    <div>
-      <div>
-        <label htmlFor={idRef.current}>{label}</label>
-        <input
+    <FieldWrapper>
+      <FieldBox>
+        <Label htmlFor={idRef.current}>{label}</Label>
+        <Input
           type={toggleType ? 'text' : type}
           name={name}
           placeholder={placeholder}
           id={idRef.current}
           value={value}
           onChange={handleChange}
+          visible={isValid}
         />
         {isShowPw && (
-          <button type="button" onClick={handleClick}>
-            눈모양
-          </button>
+          <PasswordIconBtn
+            type="button"
+            onClick={handleClick}
+            active={toggleType}
+          >
+            눈모양 아이콘
+          </PasswordIconBtn>
         )}
-      </div>
-      <div>{isVaild && <p>{message}</p>}</div>
-    </div>
+      </FieldBox>
+      <ValidationMsg>{isValid && message}</ValidationMsg>
+    </FieldWrapper>
   );
 }
 
