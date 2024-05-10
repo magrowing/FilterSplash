@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import styled from 'styled-components';
+import { FormWrapper, ImageBox, Switcher, Title } from '../styles/common/auth';
 
 import { FirebaseError } from 'firebase/app';
 import { createUser } from '../firebase/firebaseApi';
@@ -13,6 +13,7 @@ import LoadingScreen from '../components/LoadingScreen';
 
 import { initFormState } from '../types/form/auth';
 
+import { errorMessageChk } from '../utils/errorMessageChk';
 import {
   booleanChk,
   emailValidationCheck,
@@ -20,43 +21,6 @@ import {
   passwordValidationCheck,
   passwordValidationMatchCheck,
 } from '../utils/validation';
-
-const FormWrapper = styled.article`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 102.4rem;
-  height: 100vh;
-  margin: 0 auto;
-`;
-
-const Title = styled.h2`
-  width: 100%;
-  font-size: ${(props) => props.theme.fonts.headingMedium};
-  font-weight: ${(props) => props.theme.fonts.weightBold};
-  margin: ${(props) => props.theme.spacing.spacing3} auto
-    ${(props) => props.theme.spacing.spacing1};
-`;
-
-const ImageBox = styled.figure`
-  width: 9rem;
-  margin: 0 auto;
-  img {
-    width: 100%;
-  }
-`;
-
-const Switcher = styled.p`
-  text-align: center;
-  vertical-align: middle;
-  a {
-    color: ${(props) => props.theme.colors.base};
-    text-decoration: underline;
-    font-weight: ${(props) => props.theme.fonts.weightMedium};
-  }
-`;
 
 export default function CreateAccount() {
   const [error, setError] = useState('');
@@ -120,7 +84,7 @@ export default function CreateAccount() {
     } catch (e) {
       if (e instanceof FirebaseError) {
         //console.log(e.code, e.message);
-        setError(e.code);
+        setError(errorMessageChk(e.code));
       }
     } finally {
       setLoading(false);

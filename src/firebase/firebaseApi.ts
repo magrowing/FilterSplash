@@ -1,6 +1,6 @@
 import { auth, dbService } from './firebase';
 import { addDoc, collection } from 'firebase/firestore';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 import dummyUserImage from '../assets/images/dummy_user.png';
 
@@ -17,4 +17,8 @@ export const createUser =  async(email : string, password : string, name :string
     email : credentials.user.email,
     image : dummyUserImage
   });
+}
+
+export const singUp = async(email : string, password : string,) => {
+  await signInWithEmailAndPassword(auth, email, password);
 }
