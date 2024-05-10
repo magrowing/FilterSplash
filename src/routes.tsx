@@ -8,11 +8,16 @@ import Account from './pages/Account';
 import Login from './pages/Login';
 import CreateAccount from './pages/CreateAccount';
 import FindPassword from './pages/FindPassword';
+import ProtectedRoute from './components/ProtectedRoute';
 
 export const routes = [
   {
     path: '/',
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: '',

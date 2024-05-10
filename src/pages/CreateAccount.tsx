@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import TextField from '@/components/TextField';
+import { auth } from '../firebase/firebase';
+import { FirebaseError } from 'firebase/app';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+
+import TextField from '../components/form/TextField';
 
 import {
   booleanChk,
@@ -10,7 +15,9 @@ import {
   nameValidationCheck,
   passwordValidationCheck,
   passwordValidationMatchCheck,
-} from '@/utils/validation';
+} from '../utils/validation';
+import ErrorBox from '../components/form/ErrorBox';
+import LoadingScreen from '../components/LoadingScreen';
 
 const Wrapper = styled.article`
   width: 100%;
@@ -35,6 +42,10 @@ const Title = styled.h2`
 const Form = styled.form``;
 
 export default function CreateAccount() {
+  const [error, setError] = useState('');
+  const [isLoading, setLoading] = useState(false);
+  const navigation = useNavigate();
+
   const [email, setEmail] = useState({
     text: '',
     isVaild: false,
@@ -91,13 +102,45 @@ export default function CreateAccount() {
     });
   };
 
+  const onsubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError('');
+
+    if (
+      isLoading ||
+      email.text === '' ||
+      name.text === '' ||
+      password.text === '' ||
+      passwordChk.text === ''
+    )
+      return;
+
+    try {
+      setLoading(true);
+      const credentials = await createUserWithEmailAndPassword(
+        auth,
+        email.text,
+        password.text
+      );
+      await updateProfile(credentials.user, { displayName: name.text });
+      navigation('/', { replace: true });
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        //console.log(e.code, e.message);
+        setError(e.code);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Wrapper>
       <TitleSection>
         <Image src="" alt="logo" />
         <Title>회원가입</Title>
       </TitleSection>
-      <Form>
+      <Form onSubmit={onsubmit}>
         <TextField
           label="이메일"
           type="text"
@@ -140,8 +183,10 @@ export default function CreateAccount() {
           onChange={changePasswordChk}
           isShowPw={true}
         />
+        {error !== '' && <ErrorBox text={error} />}
         <button type="submit">회원가입</button>
       </Form>
+      {isLoading && <LoadingScreen />}
     </Wrapper>
   );
 }
