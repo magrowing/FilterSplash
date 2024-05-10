@@ -17,7 +17,7 @@ export function emailValidationCheck(value : string){
 
 // 아이디 : 글자 수 제한 (4글자 이상, 12글자 이하)
 export function nameValidationCheck(value: string) {
-  return value.length >= 4 && value.length <= 12 ? '' : '4글자 이상, 12글자 이하로 입력해주세요'
+  return value.length >= 4 && value.length <= 12 ? '' : '4글자 이상, 12글자 이하로 입력해주세요.'
 }
 
 // 비밀번호 : 8글자 이상, 영문, 숫자, 특수문자 사용

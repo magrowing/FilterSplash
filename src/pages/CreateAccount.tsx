@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import { auth } from '../firebase/firebase';
 import { FirebaseError } from 'firebase/app';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUser } from '../firebase/firebaseApi';
 
 import TextField from '../components/form/TextField';
+import ErrorBox from '../components/form/ErrorBox';
+import LoadingScreen from '../components/LoadingScreen';
 
 import {
   booleanChk,
@@ -16,10 +17,8 @@ import {
   passwordValidationCheck,
   passwordValidationMatchCheck,
 } from '../utils/validation';
-import ErrorBox from '../components/form/ErrorBox';
-import LoadingScreen from '../components/LoadingScreen';
 
-const Wrapper = styled.article`
+const FormWrapper = styled.article`
   width: 100%;
   max-width: 102.4rem;
   margin: 0 auto;
@@ -117,12 +116,7 @@ export default function CreateAccount() {
 
     try {
       setLoading(true);
-      const credentials = await createUserWithEmailAndPassword(
-        auth,
-        email.text,
-        password.text
-      );
-      await updateProfile(credentials.user, { displayName: name.text });
+      await createUser(email.text, password.text, name.text);
       navigation('/', { replace: true });
     } catch (e) {
       if (e instanceof FirebaseError) {
@@ -135,7 +129,7 @@ export default function CreateAccount() {
   };
 
   return (
-    <Wrapper>
+    <FormWrapper>
       <TitleSection>
         <Image src="" alt="logo" />
         <Title>회원가입</Title>
@@ -187,6 +181,6 @@ export default function CreateAccount() {
         <button type="submit">회원가입</button>
       </Form>
       {isLoading && <LoadingScreen />}
-    </Wrapper>
+    </FormWrapper>
   );
 }
