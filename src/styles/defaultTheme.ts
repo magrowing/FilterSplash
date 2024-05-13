@@ -40,6 +40,7 @@ const defaultTheme = {
     large:'1rem',
   },
   spacing : {
+    spacing0:'1rem',
     spacing1:'1.2rem',
     spacing2:'1.6rem',
     spacing3:'2rem',
