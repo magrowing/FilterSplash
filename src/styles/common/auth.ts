@@ -17,6 +17,7 @@ export const Title = styled.h2`
   font-weight: ${(props) => props.theme.fonts.weightBold};
   margin: ${(props) => props.theme.spacing.spacing3} auto
     ${(props) => props.theme.spacing.spacing1};
+  text-align: center;
 `;
 
 export const ImageBox = styled.figure`
