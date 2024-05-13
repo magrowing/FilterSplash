@@ -1,5 +1,5 @@
 import { auth, dbService } from './firebase';
-import { addDoc, collection } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 import dummyUserImage from '../assets/images/dummy_user.png';
@@ -11,8 +11,8 @@ export const createUser =  async(email : string, password : string, name :string
     password
   );
   await updateProfile(credentials.user, { displayName: name });
-  await addDoc(collection(dbService, 'users'), {
-    uid: credentials.user.uid,
+  await setDoc(doc(dbService, 'users', credentials.user.uid), {
+    uid : credentials.user.uid,
     name : credentials.user.displayName,
     email : credentials.user.email,
     image : dummyUserImage, 
@@ -27,3 +27,5 @@ export const singUp = async(email : string, password : string,) => {
 export const resetPassword = async(email : string) => {
   await sendPasswordResetEmail(auth, email);
 }
+
+

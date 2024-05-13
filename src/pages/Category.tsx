@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { doc, updateDoc } from 'firebase/firestore';
-import { dbService } from '../firebase/firebase';
+import { auth, dbService } from '../firebase/firebase';
 
 import styled from 'styled-components';
 import { FormWrapper } from '../styles/common/auth';
+import { useUserInfoStore } from '../stores/useUserInfoStore';
 
 const autoKeyword = [
   '배경화면',
@@ -97,7 +98,10 @@ export default function Category() {
   const [value, setValue] = useState('');
   const [keywords, setKeywords] = useState<string[]>([]);
   const [isLoading, setLoading] = useState(false);
-  const param = useParams();
+
+  const user = auth.currentUser;
+  const setCategory = useUserInfoStore((state) => state.setCategory);
+
   const navigation = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,9 +124,10 @@ export default function Category() {
   };
 
   const onCreateKeywords = async (type: string) => {
-    if (isLoading || !param.id) return;
+    if (isLoading || !user) return;
     try {
-      const docRef = doc(dbService, 'users', param.id);
+      setCategory(type !== 'auto' ? [...keywords] : autoKeyword);
+      const docRef = doc(dbService, 'users', user.uid);
       await updateDoc(docRef, {
         category: type !== 'auto' ? [...keywords] : autoKeyword,
       });
