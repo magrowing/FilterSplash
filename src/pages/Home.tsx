@@ -4,6 +4,7 @@ import { auth } from '../firebase/firebase';
 
 export default function Home() {
   const navigate = useNavigate();
+
   const handleLogout = async () => {
     const isLogoutConfirm = confirm('Are you sure you want to logout?');
     if (isLogoutConfirm) {

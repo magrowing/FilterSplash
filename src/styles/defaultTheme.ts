@@ -20,6 +20,7 @@ const defaultTheme = {
     informationText:'#1F53CC',
     informationBorder:'#D4E1FF',
     informationBg:'#E9F0FF',
+    dimmedBg : '#11111187'
   },
   fonts : {
     headingLarge:'5rem',
