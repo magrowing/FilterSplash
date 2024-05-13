@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 type ButtonProps = {
   type: 'button' | 'submit' | 'reset';
   text?: string;
+  onClick?: () => void;
 };
 
 const ButtonStyle = styled.button`
@@ -16,6 +17,10 @@ const ButtonStyle = styled.button`
   font-size: ${(props) => props.theme.fonts.bodyLarge};
 `;
 
-export default function Button({ text, type }: ButtonProps) {
-  return <ButtonStyle type={type}>{text}</ButtonStyle>;
+export default function Button({ text, type, onClick }: ButtonProps) {
+  return (
+    <ButtonStyle type={type} onClick={onClick}>
+      {text}
+    </ButtonStyle>
+  );
 }

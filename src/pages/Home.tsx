@@ -1,22 +1,41 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
-import { auth } from '../firebase/firebase';
+import { auth, dbService } from '../firebase/firebase';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 export default function Home() {
-  const navigate = useNavigate();
+  const user = auth.currentUser;
+  const [isCategory, setIsCategory] = useState(false);
+  const [docID, setDocID] = useState('');
 
-  const handleLogout = async () => {
-    const isLogoutConfirm = confirm('Are you sure you want to logout?');
-    if (isLogoutConfirm) {
-      await auth.signOut();
-      navigate('/login', { replace: true });
+  const categorySettingChk = async () => {
+    const categoryQuery = query(
+      collection(dbService, 'users'),
+      where('uid', '==', user?.uid)
+    );
+
+    const snapshot = await getDocs(categoryQuery);
+    const usersData = snapshot.docs.map((doc) => {
+      const { category } = doc.data();
+      return {
+        category,
+        id: doc.id,
+      };
+    });
+    if (!usersData[0].category.length) {
+      setIsCategory(true);
+      setDocID(usersData[0].id);
     }
   };
-  return (
-    <div>
-      <button type="button" onClick={handleLogout}>
-        로그아웃
-      </button>
-    </div>
-  );
+
+  useEffect(() => {
+    categorySettingChk();
+  }, []);
+
+  if (isCategory) {
+    return <Navigate to={`/category/${docID}`} />;
+  }
+
+  return <div>Home 화면 입니다.</div>;
 }

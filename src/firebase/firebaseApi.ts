@@ -15,7 +15,8 @@ export const createUser =  async(email : string, password : string, name :string
     uid: credentials.user.uid,
     name : credentials.user.displayName,
     email : credentials.user.email,
-    image : dummyUserImage
+    image : dummyUserImage, 
+    category : [],
   });
 }
 

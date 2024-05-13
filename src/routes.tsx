@@ -24,7 +24,7 @@ export const routes = [
         element: <Home />,
       },
       {
-        path: '/category',
+        path: '/category/:id',
         element: <Category />,
       },
       {
