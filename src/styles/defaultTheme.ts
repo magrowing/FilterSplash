@@ -4,6 +4,7 @@ const defaultTheme = {
     baseWhite :'#FFF',
     primary:'#111',
     secondary:'#767676',
+    third:'#d1d1d1',
     danger:'#ED003B',
     dangerText:'#D50136',
     dangerBorder:'#FCD4DE',
@@ -20,7 +21,8 @@ const defaultTheme = {
     informationText:'#1F53CC',
     informationBorder:'#D4E1FF',
     informationBg:'#E9F0FF',
-    dimmedBg : '#11111187'
+    dimmedBg : '#11111187', 
+    btnPrimaryBg : 'linear-gradient(180deg, #0000 50%, #0b151e05), #fff'
   },
   fonts : {
     headingLarge:'5rem',

@@ -12,16 +12,24 @@ const autoKeyword = [
   '배경화면',
   '자연',
   '3D렌더링',
-  '식음료',
-  '비즈니스',
-  '건강',
-  '스포츠',
-  '필름',
   '여행',
-  '흑백',
+  '인테리어',
+  '건축 및 인테리어',
+  '텍스처 및 패턴',
+  '거리사진',
+  '필름',
+  '패션',
+  '뷰티',
+  '사람',
+  '비즈니스 및 업무',
+  '식음료',
+  '건강 및 웰빙',
+  '스포츠',
 ];
 
-const Wrapper = styled(FormWrapper)``;
+const Wrapper = styled(FormWrapper)`
+  height: calc(100vh - 8.6rem);
+`;
 
 const Form = styled.div`
   display: flex;

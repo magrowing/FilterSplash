@@ -25,6 +25,10 @@ export const routes = [
         element: <Home />,
       },
       {
+        path: '/:id',
+        element: <Home />,
+      },
+      {
         path: '/category',
         element: <Category />,
       },

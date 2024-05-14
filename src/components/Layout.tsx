@@ -19,7 +19,7 @@ export default function Layout() {
     const docRef = doc(dbService, 'users', user.uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log(docSnap.data());
+      // console.log(docSnap.data());
       const { category } = docSnap.data();
       setCategory(category);
     }
