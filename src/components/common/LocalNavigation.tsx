@@ -47,10 +47,8 @@ export default function LocalNavigation() {
   const categories = useUserInfoStore((state) => state.category);
 
   const navLink = categories.map((item: string, index: number) => (
-    <NavItem>
-      <NavLink to={`/${trimString(item)}`} key={`${item}-${index}`}>
-        {item}
-      </NavLink>
+    <NavItem key={`${item}-${index}`}>
+      <NavLink to={`/${trimString(item)}`}>{item}</NavLink>
     </NavItem>
   ));
 
