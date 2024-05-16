@@ -10,6 +10,6 @@ export const PageContainer = styled.section`
   margin: 0 auto;
 
   @media screen and (max-width: 1440px) {
-    max-width: 90%;
+    max-width: 85%;
   }
 `

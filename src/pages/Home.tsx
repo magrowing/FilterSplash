@@ -4,6 +4,7 @@ import LocalNavigation from '../components/common/LocalNavigation';
 import IntroSearchBar from '../components/home/IntroSearchBar';
 import SettingCategories from '../components/setting-categories';
 import BannerSlide from '../components/home/BannerSlider';
+import CardList from '../components/card/CardList';
 
 import { PageContainer, PageWrapper } from '../styles/common/pages';
 
@@ -33,6 +34,7 @@ export default function Home() {
           <BannerSlide />
         </IntroWrapper>
         {/* List 영역 */}
+        <CardList />
       </PageContainer>
     </PageWrapper>
   );
