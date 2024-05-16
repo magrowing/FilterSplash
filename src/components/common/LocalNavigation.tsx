@@ -1,8 +1,10 @@
-import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
 
 import styled from 'styled-components';
 
 import { useUserInfoStore } from '../../stores/useUserInfoStore';
+import { useUserImageStore } from '../../stores/useImageStore';
 
 const Wrapper = styled.ul`
   display: flex;
@@ -45,6 +47,17 @@ const trimString = (str: string) => {
 
 export default function LocalNavigation() {
   const categories = useUserInfoStore((state) => state.category);
+  const { setPage, setQuery } = useUserImageStore((state) => state.actions);
+  const param = useParams();
+
+  useEffect(() => {
+    categories.forEach((nav: string) => {
+      if (nav.includes(param.id ?? 'random')) {
+        setQuery(nav);
+        setPage(1);
+      }
+    });
+  }, [param.id]);
 
   const navLink = categories.map((item: string, index: number) => (
     <NavItem key={`${item}-${index}`}>
