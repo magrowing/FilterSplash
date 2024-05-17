@@ -18,6 +18,9 @@ export const createUser =  async(email : string, password : string, name :string
     image : dummyUserImage, 
     category : [],
   });
+  await setDoc(doc(dbService, 'collections', credentials.user.uid), {
+    bookmarkData : [],
+  });
 }
 
 export const singUp = async(email : string, password : string,) => {

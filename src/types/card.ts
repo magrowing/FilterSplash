@@ -101,3 +101,10 @@ export const initImageData : ImageData= {
   total : 0,
   total_pages:0,
 }
+
+export type BookmarkData = {
+  id: string;
+  authorName: string;
+  describe: string;
+  image: string; 
+}
