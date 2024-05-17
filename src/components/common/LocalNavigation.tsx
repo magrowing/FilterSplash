@@ -7,12 +7,18 @@ import { useUserInfoStore } from '../../stores/useUserInfoStore';
 import { useUserImageStore } from '../../stores/useImageStore';
 
 const Wrapper = styled.ul`
+  position: fixed;
+  top: 6.6rem;
+  left: 0%;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   padding: 0 2rem;
   gap: 2rem;
   border-bottom: 1px solid ${(props) => props.theme.colors.third};
+  background-color: ${(props) => props.theme.colors.baseWhite};
 `;
 
 const NavItem = styled.li`

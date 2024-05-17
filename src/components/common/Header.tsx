@@ -6,12 +6,17 @@ import SearchBar from '../header/SearchBar';
 import UserInfo from '../header/UserInfo';
 
 const HeaderWrapper = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
   display: flex;
   align-items: center;
   width: 100%;
   padding: ${(props) => props.theme.spacing.spacing1}
     ${(props) => props.theme.spacing.spacing3};
   gap: ${(props) => props.theme.spacing.spacing3};
+  background-color: ${(props) => props.theme.colors.baseWhite};
 `;
 
 const Logo = styled.h1`

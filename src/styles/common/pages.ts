@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const PageWrapper = styled.article`
   width: 100%;
+  padding-top: calc(6.6rem + 4.2rem);
 `
 
 export const PageContainer = styled.section`
