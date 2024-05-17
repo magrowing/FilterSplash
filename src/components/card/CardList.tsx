@@ -1,26 +1,16 @@
 import { useEffect } from 'react';
-import styled from 'styled-components';
 
 import { auth, dbService } from '../../firebase/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 import Card from './Card';
+import { CardListWrapper } from '../../styles/common/list';
 
 import useImageDate from '../../hooks/useImageDate';
 
 import { useBookmarkStore } from '../../stores/useSettingBookmarkStore';
 
 import { CardDTO } from '../../types/card';
-
-const CardListWrapper = styled.ul`
-  width: 100%;
-  columns: 4;
-  column-gap: 2rem;
-
-  @media screen and (max-width: 1440px) {
-    columns: 3;
-  }
-`;
 
 export default function CardList() {
   const user = auth.currentUser;

@@ -4,12 +4,17 @@ import { auth, dbService } from '../../firebase/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 import LoadingScreen from '../LoadingScreen';
-import { BookmarkData } from '../../types/card';
+import CollectionCard from './CollectionCard';
+
+import { CardListWrapper } from '../../styles/common/list';
+
+import { useBookmarkStore } from '../../stores/useSettingBookmarkStore';
 
 export default function CollectionsList() {
   const user = auth.currentUser;
   const [isLoading, setLoading] = useState(true);
-  const [collections, setCollection] = useState<BookmarkData[]>([]);
+  const bookmarkData = useBookmarkStore((state) => state.bookmarkData);
+  const { setBookmarkData } = useBookmarkStore((state) => state.actions);
 
   const userSettingChk = async () => {
     if (!user) return;
@@ -20,7 +25,7 @@ export default function CollectionsList() {
       if (docCollectionsSnap.exists()) {
         console.log(docCollectionsSnap.data());
         const { bookmarkData } = docCollectionsSnap.data();
-        setCollection(bookmarkData);
+        setBookmarkData(bookmarkData);
       }
     } catch (e) {
       console.log(e);
@@ -38,10 +43,10 @@ export default function CollectionsList() {
   }
 
   return (
-    <div>
-      {collections.map((collection) => (
-        <p key={collection.id}>{collection.authorName}</p>
+    <CardListWrapper>
+      {bookmarkData.map((collection) => (
+        <CollectionCard key={collection.id} data={collection} />
       ))}
-    </div>
+    </CardListWrapper>
   );
 }

@@ -3,72 +3,18 @@ import { Link } from 'react-router-dom';
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
 import { auth, dbService } from '../../firebase/firebase';
 
-import styled from 'styled-components';
+import {
+  CardItem,
+  Img,
+  OverlayBox,
+  ButtonBox,
+  UserInfo,
+} from '../../styles/common/list';
 import CommonButton from '../../styles/common/commonButton';
-
-import { CardDTO } from '../../types/card';
 
 import { useBookmarkStore } from '../../stores/useSettingBookmarkStore';
 
-const CardItem = styled.li`
-  position: relative;
-  width: 100%;
-  margin-bottom: 1rem;
-  break-inside: avoid;
-  &:hover {
-    .overlay {
-      opacity: 1;
-    }
-  }
-
-  @media screen and (max-width: 1440px) {
-    margin-bottom: 2rem;
-  }
-`;
-
-const Img = styled.img`
-  display: block;
-  max-width: 100%;
-  object-fit: cover;
-`;
-
-const OverlayBox = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  height: 100%;
-  padding: 2rem;
-  background-color: rgba(0, 0, 0, 0.4);
-  opacity: 0;
-`;
-
-const UserInfo = styled.dl`
-  width: 100%;
-  display: flex;
-  align-items: center;
-
-  dt {
-    color: ${(props) => props.theme.colors.baseWhite};
-    margin-left: 1rem;
-  }
-
-  dd {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 100%;
-    overflow: hidden;
-  }
-`;
-
-const ButtonBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: end;
-`;
+import { CardDTO } from '../../types/card';
 
 type CardProps = {
   data: CardDTO;
@@ -86,26 +32,26 @@ export default function Card({ data }: CardProps) {
       return;
     }
 
+    const updateDate = {
+      id: data.id,
+      image: data.urls.small,
+      authorName: data.user.name,
+      authorImage: data.user.profile_image.medium,
+      describe: data.alt_description,
+      download: data.links.download,
+    };
+
     try {
       const docRef = doc(dbService, 'collections', user.uid);
       await updateDoc(docRef, {
-        bookmarkData: arrayUnion({
-          id: data.id,
-          authorName: data.user.name,
-          describe: data.alt_description,
-          image: data.urls.small,
-        }),
+        bookmarkData: arrayUnion(updateDate),
       });
       setBookmarkData([
         {
-          id: data.id,
-          authorName: data.user.name,
-          describe: data.alt_description,
-          image: data.urls.small,
+          ...updateDate,
         },
         ...bookmarkData,
       ]);
-      console.log(`${data.id} 북마크 성공`);
     } catch {
       console.log('FireBase Error');
     }

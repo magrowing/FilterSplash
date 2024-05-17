@@ -26,6 +26,12 @@ const CommonButton = styled.button.attrs<CommonButtonStyleProps>((props) => {
     `
   }
 
+${
+    (props) => props.className === 'is_delete' && css`
+    background: ${props.theme.colors.danger};
+    `
+  }
+
   &::after{
     content: ''; 
     display: inherit; 

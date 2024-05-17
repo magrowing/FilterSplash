@@ -104,7 +104,10 @@ export const initImageData : ImageData= {
 
 export type BookmarkData = {
   id: string;
-  authorName: string;
-  describe: string;
   image: string; 
+  authorName: string;
+  authorImage : string; 
+  describe: string;
+  download :string;
+
 }
