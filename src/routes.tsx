@@ -2,6 +2,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 
 import Home from './pages/Home';
+import Search from './pages/Search';
 import Collection from './pages/Collection';
 import Profile from './pages/Profile';
 import Account from './pages/Account';
@@ -26,6 +27,10 @@ export const routes = [
       {
         path: '/:id',
         element: <Home />,
+      },
+      {
+        path: 'search/:id',
+        element: <Search />,
       },
       {
         path: '/collection',

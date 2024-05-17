@@ -2,6 +2,7 @@ const defaultTheme = {
   colors: {
     base:'#767676',
     baseWhite :'#FFF',
+    baseGray : '#f5f5f5',
     primary:'#111',
     secondary:'#767676',
     third:'#d1d1d1',
