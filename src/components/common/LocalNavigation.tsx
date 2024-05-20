@@ -10,7 +10,7 @@ const Wrapper = styled.ul`
   position: fixed;
   top: 6.6rem;
   left: 0%;
-  z-index: 100;
+  z-index: 99;
   display: flex;
   align-items: center;
   justify-content: center;
