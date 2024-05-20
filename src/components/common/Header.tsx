@@ -13,10 +13,9 @@ const HeaderWrapper = styled.header`
   display: flex;
   align-items: center;
   width: 100%;
-  padding: ${(props) => props.theme.spacing.spacing1}
-    ${(props) => props.theme.spacing.spacing3};
   gap: ${(props) => props.theme.spacing.spacing3};
   background-color: ${(props) => props.theme.colors.baseWhite};
+  padding: 1.2rem 2rem;
 `;
 
 const Logo = styled.h1`

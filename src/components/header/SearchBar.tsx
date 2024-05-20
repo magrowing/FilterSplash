@@ -82,7 +82,7 @@ const SearchButton = styled.button<styledProps>`
     `}
 `;
 
-export default function SearchBar({ type }: { type: string }) {
+export default function SearchBar({ type }: { type?: string }) {
   const [search, setSearch] = useState('');
   const { setPage, setQuery } = useUserImageStore((state) => state.actions);
   const inputRef = useRef<HTMLInputElement>(null);
