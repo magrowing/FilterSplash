@@ -37,7 +37,7 @@ export const routes = [
         element: <Collection />,
       },
       {
-        path: '/profile/:id',
+        path: '/profile',
         element: <Profile />,
       },
       {
