@@ -18,17 +18,20 @@ const CommonButton = styled.button.attrs<CommonButtonStyleProps>((props) => {
   font-size: 0;
   background: ${(props) => props.theme.colors.btnPrimaryBg};
   border-radius: ${(props) => props.theme.shape.small};
+  border: 1px solid ${(props) => props.theme.colors.third};
   margin-left: 1rem;
 
   ${
     (props) => props.className === 'is_active' && css`
     background: ${props.theme.colors.success};
+    border-color: ${props.theme.colors.success};
     `
   }
 
 ${
     (props) => props.className === 'is_delete' && css`
     background: ${props.theme.colors.danger};
+    border-color: ${props.theme.colors.danger};
     `
   }
 

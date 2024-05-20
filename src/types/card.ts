@@ -20,6 +20,7 @@ export interface CardDTO {
   urls: Url
   user: any
   width: number
+  total_likes:number
 }
 
 export interface ImageData {
@@ -93,7 +94,8 @@ export const initialCardDTO: CardDTO = {
     thumb: ''
   },
   user: {},
-  width: 0
+  width: 0,
+  total_likes:0,
 };
 
 export const initImageData : ImageData= {
@@ -109,5 +111,25 @@ export type BookmarkData = {
   authorImage : string; 
   describe: string;
   download :string;
+}
 
+export type DetailData = {
+  id: string;
+  image: string; 
+  authorName: string;
+  authorImage : string; 
+  describe: string;
+  download :string;
+  likes :number;
+  total_likes:number; 
+  width : number; 
+  height : number; 
+  created_at : string; 
+  updated_at:string; 
+  tags : [
+    {
+      type :string; 
+      title : string; 
+    }
+  ]
 }
