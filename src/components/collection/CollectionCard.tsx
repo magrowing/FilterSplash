@@ -51,28 +51,27 @@ export default function CollectionCard({ data }: CardProps) {
   return (
     <CardItem>
       <Img src={data.image} alt={data.describe} />
-      <OverlayBox className="overlay">
-        <ButtonBox>
-          <CommonButton
-            className={'is_delete'}
-            image={'/images/icon_bookmark_delete.svg'}
-            onClick={handleBookmark}
-          >
-            북마크
+      <OverlayBox />
+      <ButtonBox>
+        <CommonButton
+          className={'is_delete'}
+          image={'/images/icon_bookmark_delete.svg'}
+          onClick={handleBookmark}
+        >
+          북마크
+        </CommonButton>
+        <Link to={data.download} target="_blank">
+          <CommonButton image={'/images/icon_download.svg'}>
+            다운로드
           </CommonButton>
-          <Link to={data.download} target="_blank">
-            <CommonButton image={'/images/icon_download.svg'}>
-              다운로드
-            </CommonButton>
-          </Link>
-        </ButtonBox>
-        <UserInfo>
-          <dd>
-            <Img src={data.authorImage} alt={`${data.authorName}-이미지`} />
-          </dd>
-          <dt>{data.authorName}</dt>
-        </UserInfo>
-      </OverlayBox>
+        </Link>
+      </ButtonBox>
+      <UserInfo>
+        <dd>
+          <Img src={data.authorImage} alt={`${data.authorName}-이미지`} />
+        </dd>
+        <dt>{data.authorName}</dt>
+      </UserInfo>
     </CardItem>
   );
 }

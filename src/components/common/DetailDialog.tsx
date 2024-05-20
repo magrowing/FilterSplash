@@ -70,9 +70,20 @@ const DialogHeader = styled.div`
   margin-bottom: 2rem;
 
   dl {
+    position: relative;
+    bottom: unset;
+    left: unset;
+    opacity: 1;
     dt {
       color: ${(props) => props.theme.colors.primary};
     }
+  }
+
+  div {
+    position: relative;
+    top: unset;
+    right: unset;
+    opacity: 1;
   }
 `;
 

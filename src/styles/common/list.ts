@@ -15,11 +15,15 @@ export const CardItem = styled.li`
   width: 100%;
   margin-bottom: 1rem;
   break-inside: avoid;
-  &:hover {
-    .overlay {
-      opacity: 1;
-    }
+
+&:hover{
+  > div {
+    opacity: 1;
   }
+  > dl{
+    opacity: 1;
+  }
+}
 
   @media screen and (max-width: 1440px) {
     margin-bottom: 2rem;
@@ -27,29 +31,34 @@ export const CardItem = styled.li`
 `;
 
 export const Img = styled.img`
+  position: relative;
   display: block;
+  width: 100%;
   max-width: 100%;
   object-fit: cover;
 `;
 
-export const OverlayBox = styled.div`
+export const OverlayBox  = styled.div`
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  z-index: 1;
   width: 100%;
   height: 100%;
   padding: 2rem;
   background-color: rgba(0, 0, 0, 0.4);
   opacity: 0;
-`;
+`
 
 export const UserInfo = styled.dl`
+  position: absolute;
+  bottom: 2rem; 
+  left: 2rem;
+  z-index: 2;
   width: 100%;
   display: flex;
   align-items: center;
+  opacity: 0;
 
   dt {
     color: ${(props) => props.theme.colors.baseWhite};
@@ -65,7 +74,12 @@ export const UserInfo = styled.dl`
 `;
 
 export const ButtonBox = styled.div`
+  position: absolute;
+  top: 2rem; 
+  right: 2rem;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: end;
+  opacity: 0;
 `;

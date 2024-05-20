@@ -27,41 +27,40 @@ export default function Card({
   const bookmarkData = useBookmarkStore((state) => state.bookmarkData);
 
   return (
-    <CardItem onClick={() => handleDetailDialog(data)}>
+    <CardItem>
       <Img src={data.urls.small} alt={data.alt_description} />
-      <OverlayBox className="overlay">
-        <ButtonBox>
-          <CommonButton
-            className={
-              bookmarkData.filter((item) => item.id === data.id).length === 1
-                ? `is_active`
-                : ''
-            }
-            image={
-              bookmarkData.filter((item) => item.id === data.id).length === 1
-                ? '/images/icon_bookmark_active.svg'
-                : '/images/icon_bookmark.svg'
-            }
-            onClick={() => handleAddBookmark(data)}
-          >
-            북마크
+      <OverlayBox onClick={() => handleDetailDialog(data)} />
+      <ButtonBox>
+        <CommonButton
+          className={
+            bookmarkData.filter((item) => item.id === data.id).length === 1
+              ? `is_active`
+              : ''
+          }
+          image={
+            bookmarkData.filter((item) => item.id === data.id).length === 1
+              ? '/images/icon_bookmark_active.svg'
+              : '/images/icon_bookmark.svg'
+          }
+          onClick={() => handleAddBookmark(data)}
+        >
+          북마크
+        </CommonButton>
+        <Link to={data.links.download} target="_blank">
+          <CommonButton image={'/images/icon_download.svg'}>
+            다운로드
           </CommonButton>
-          <Link to={data.links.download} target="_blank">
-            <CommonButton image={'/images/icon_download.svg'}>
-              다운로드
-            </CommonButton>
-          </Link>
-        </ButtonBox>
-        <UserInfo>
-          <dd>
-            <Img
-              src={data.user.profile_image.medium}
-              alt={`${data.user.name}-이미지`}
-            />
-          </dd>
-          <dt>{data.user.name}</dt>
-        </UserInfo>
-      </OverlayBox>
+        </Link>
+      </ButtonBox>
+      <UserInfo>
+        <dd>
+          <Img
+            src={data.user.profile_image.medium}
+            alt={`${data.user.name}-이미지`}
+          />
+        </dd>
+        <dt>{data.user.name}</dt>
+      </UserInfo>
     </CardItem>
   );
 }

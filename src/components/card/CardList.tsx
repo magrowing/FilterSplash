@@ -56,7 +56,7 @@ export default function CardList() {
   /**
    * Bookmark 추가하는 함수
    */
-  const handleBookmark = async (data: CardDTO) => {
+  const handleAddBookmark = async (data: CardDTO) => {
     if (!user) return;
     if (bookmarkData.findIndex((item) => item.id === data.id) > -1) {
       alert('이미 북마크에 저장된 이미지입니다.');
@@ -100,7 +100,7 @@ export default function CardList() {
             key={card.id}
             data={card}
             handleDetailDialog={handleDetailDialog}
-            handleBookmark={handleBookmark}
+            handleAddBookmark={handleAddBookmark}
           />
         ))}
       </CardListWrapper>
@@ -108,7 +108,7 @@ export default function CardList() {
         <DetailDialog
           data={detailData}
           handleClose={handleClose}
-          handleBookmark={handleBookmark}
+          handleAddBookmark={handleAddBookmark}
         />
       )}
     </>
