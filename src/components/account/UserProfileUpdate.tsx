@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { styled } from 'styled-components';
 
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { updateProfile } from 'firebase/auth';
 import { auth, dbService, storageService } from '../../firebase/firebase';
@@ -118,34 +118,11 @@ const UserInfoUpdateButton = styled(Button)`
 
 export default function UserProfileUpdate() {
   const [isLoading, setLoading] = useState(false);
-  const [editUser, setEditUser] = useState({
-    image: '',
-    name: '',
-    email: '',
-  });
   const [name, setName] = useState(initFormState);
   const [file, setFile] = useState<File>();
+  const user = useUserInfoStore((state) => state.user);
   const setUser = useUserInfoStore((state) => state.setUser);
   const currentUser = auth.currentUser;
-
-  const getUserInfo = async () => {
-    if (!currentUser) return;
-
-    try {
-      const docRef = doc(dbService, 'users', currentUser.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const { image, name, email } = docSnap.data();
-        setEditUser({
-          image,
-          name,
-          email,
-        });
-      }
-    } catch {
-      console.log('Firebase Error');
-    }
-  };
 
   const handleChangeProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -160,7 +137,7 @@ export default function UserProfileUpdate() {
         return;
       }
       setFile(file);
-      setEditUser({ ...editUser, image: URL.createObjectURL(file) });
+      setUser({ ...user, image: URL.createObjectURL(file) });
     }
   };
 
@@ -170,7 +147,7 @@ export default function UserProfileUpdate() {
       isValid: booleanChk(nameValidationCheck(value)),
       message: nameValidationCheck(value),
     });
-    setEditUser({ ...editUser, name: value });
+    setUser({ ...user, name: value });
   };
 
   const onUpdateSuBmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -183,7 +160,7 @@ export default function UserProfileUpdate() {
       setLoading(true);
       const docRef = doc(dbService, 'users', currentUser.uid);
       await updateDoc(docRef, {
-        name: editUser.name,
+        name: user.name,
       });
 
       if (file) {
@@ -198,12 +175,11 @@ export default function UserProfileUpdate() {
         });
       }
 
-      setEditUser({
-        ...editUser,
-        image: currentUser.photoURL ?? editUser.image,
-        name: editUser.name,
+      setUser({
+        ...user,
+        image: currentUser.photoURL ?? user.image,
+        name: user.name,
       });
-      setUser(editUser);
     } catch {
       console.log('Firebase Error');
     } finally {
@@ -211,16 +187,12 @@ export default function UserProfileUpdate() {
     }
   };
 
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-
   return (
     <UserInfoForm onSubmit={onUpdateSuBmit}>
       <FormFieldBox>
         <UserInfoImage>
           <ImageBox>
-            <img src={editUser.image} alt={editUser.name} />
+            <img src={user.image} alt={user.name} />
           </ImageBox>
           <ImageEditLabel htmlFor="file">
             <svg
@@ -246,7 +218,7 @@ export default function UserProfileUpdate() {
         <UserInfoField>
           <FieldBox>
             <Label htmlFor="Email">Email</Label>
-            <Input type="text" value={editUser.email} readOnly />
+            <Input type="text" value={user.email} readOnly />
           </FieldBox>
           <FieldBox>
             <TextField
@@ -254,7 +226,7 @@ export default function UserProfileUpdate() {
               type="text"
               name="name"
               placeholder="사용자 이름을 입력해주세요."
-              value={editUser.name}
+              value={user.name}
               isValid={name.isValid}
               message={name.message}
               onChange={changeName}
