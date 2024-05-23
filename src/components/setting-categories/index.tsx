@@ -4,6 +4,8 @@ import Form from './Form';
 import Keywords from './Keywords';
 import Buttons from './Buttons';
 
+import { CloseButton } from '../../styles/common/CloseButton';
+
 const Wrapper = styled.section`
   position: fixed;
   top: 0;
@@ -18,6 +20,7 @@ const Wrapper = styled.section`
 `;
 
 const Container = styled.div`
+  position: relative;
   width: 100%;
   max-width: 60rem;
   padding: 2rem;
@@ -51,10 +54,32 @@ const HelpText = styled.p`
   font-size: ${(props) => props.theme.fonts.bodySmall};
 `;
 
-export default function SettingCategories() {
+const PopupCloseButton = styled(CloseButton)`
+  position: absolute;
+  top: -2rem;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 1001;
+  padding: 0;
+`;
+
+type SettingCategoriesProps = {
+  popup?: boolean;
+  onClosePopup?: () => void;
+};
+
+export default function SettingCategories({
+  popup,
+  onClosePopup,
+}: SettingCategoriesProps) {
   return (
     <Wrapper>
       <Container>
+        {popup && (
+          <PopupCloseButton type="button" onClick={onClosePopup}>
+            팝업 닫기 버튼
+          </PopupCloseButton>
+        )}
         <TitleWrapper>
           <Title>
             <svg
@@ -75,7 +100,7 @@ export default function SettingCategories() {
         </TitleWrapper>
         <Form />
         <Keywords />
-        <Buttons />
+        <Buttons popup={popup} onClosePopup={onClosePopup} />
       </Container>
     </Wrapper>
   );

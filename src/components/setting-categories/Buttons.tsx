@@ -18,7 +18,7 @@ const BtnWrapper = styled.div`
 `;
 
 const Button = styled.button`
-  width: 50%;
+  width: 100%;
   height: 4rem;
   padding: ${(props) => props.theme.spacing.spacing1};
   background-color: ${(props) => props.theme.colors.primary};
@@ -60,8 +60,14 @@ const autoKeyword = [
   '스포츠',
 ];
 
-export default function Buttons() {
+type ButtonsProps = {
+  popup?: boolean;
+  onClosePopup?: () => void;
+};
+
+export default function Buttons({ popup, onClosePopup }: ButtonsProps) {
   const [isLoading, setLoading] = useState(false);
+  const [isUpdateLoading, setUpdateLoading] = useState(false);
   const keywords = useSettingCategoriesStore((state) => state.keywords);
   const setCategory = useUserInfoStore((state) => state.setCategory);
 
@@ -70,13 +76,23 @@ export default function Buttons() {
 
   const onCreateKeywords = async (type: string) => {
     if (isLoading || !user) return;
+
     const match = type !== 'auto' ? [...keywords] : autoKeyword;
+
     try {
       setCategory(match);
+      setUpdateLoading(true);
       const docRef = doc(dbService, 'users', user.uid);
       await updateDoc(docRef, {
         category: match,
       });
+      if (popup) {
+        setUpdateLoading(false);
+        if (onClosePopup) {
+          onClosePopup();
+        }
+        return;
+      }
       navigation('/', { replace: true });
     } catch (e) {
       console.log(e);
@@ -87,15 +103,19 @@ export default function Buttons() {
 
   return (
     <BtnWrapper>
-      <WhiteButton type="button" onClick={() => onCreateKeywords('auto')}>
-        카테고리 자동 생성
-      </WhiteButton>
+      {!popup && (
+        <WhiteButton type="button" onClick={() => onCreateKeywords('auto')}>
+          카테고리 자동 생성
+        </WhiteButton>
+      )}
       <Button
         type="button"
         onClick={() => onCreateKeywords('new')}
         disabled={keywords.length === 0}
       >
-        카테고리 생성
+        {popup
+          ? `${isUpdateLoading ? 'Loading...' : '카테고리 업데이트'} `
+          : '카테고리 생성'}
       </Button>
     </BtnWrapper>
   );

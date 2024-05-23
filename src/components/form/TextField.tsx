@@ -9,7 +9,7 @@ import {
 } from '../../types/form/textField';
 
 const FieldWrapper = styled.div`
-  width: 40rem;
+  width: 100%;
   margin-top: 1.2rem;
 `;
 
@@ -36,9 +36,7 @@ const Input = styled.input<InputProps>`
 
   &:focus {
     border-color: ${(props) =>
-      props.visible
-        ? props.theme.colors.danger
-        : props.theme.colors.information};
+      props.valid ? props.theme.colors.danger : props.theme.colors.information};
   }
 `;
 
@@ -105,7 +103,7 @@ function TextField({
           id={idRef.current}
           value={value}
           onChange={handleChange}
-          visible={isValid}
+          $valid={isValid}
         />
         {isShowPw && (
           <PasswordIconBtn

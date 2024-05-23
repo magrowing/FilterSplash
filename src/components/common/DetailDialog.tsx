@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
-import { ButtonBox, Img, UserInfo } from '../../styles/common/list';
 import CommonButton from '../../styles/common/commonButton';
+import { ButtonBox, Img, UserInfo } from '../../styles/common/list';
+import { CloseButton } from '../../styles/common/CloseButton';
 
 import { useBookmarkStore } from '../../stores/useSettingBookmarkStore';
 
@@ -42,15 +43,6 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   max-width: 90rem;
-`;
-
-const CloseButton = styled.button`
-  width: 4rem;
-  height: 4rem;
-  background: url('/images/icon_close.svg') center no-repeat;
-  background-size: 2.4rem;
-  margin-left: auto;
-  font-size: 0;
 `;
 
 const DialogContent = styled.section`

@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 
+import CategoryTagList from '../common/CategoryTagList';
+
 import { useUserInfoStore } from '../../stores/useUserInfoStore';
 
 const Wrapper = styled.div`
@@ -75,26 +77,8 @@ const TagBox = styled.div`
   margin-bottom: 6rem;
 `;
 
-const TagList = styled.ul`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-`;
-
-const TagItem = styled.li`
-  padding: ${(props) => props.theme.shape.small};
-  margin-right: ${(props) => props.theme.shape.small};
-  margin-bottom: 0.6rem;
-  color: ${(props) => props.theme.colors.secondary};
-  background-color: ${(props) => props.theme.colors.baseGray};
-  font-size: ${(props) => props.theme.fonts.bodySmall};
-  border-radius: ${(props) => props.theme.shape.small};
-`;
-
 export default function UserProfile() {
   const user = useUserInfoStore((state) => state.user);
-  const category = useUserInfoStore((state) => state.category);
   const navigation = useNavigate();
 
   const handleProfileEdit = () => {
@@ -133,11 +117,7 @@ export default function UserProfile() {
         </dl>
         <TagBox>
           <p>관심사</p>
-          <TagList>
-            {category.map((item) => (
-              <TagItem key={`${user.name}-${item}`}>{item}</TagItem>
-            ))}
-          </TagList>
+          <CategoryTagList />
         </TagBox>
       </InfoBox>
     </Wrapper>

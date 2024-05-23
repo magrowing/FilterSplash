@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { auth } from '../../firebase/firebase';
 
-import profileImg from '../../assets/images/dummy_user.png';
+import { useUserInfoStore } from '../../stores/useUserInfoStore';
 
 const UserWrapper = styled.div`
   position: relative;
@@ -75,6 +75,7 @@ const UserLinkItem = styled.li`
 `;
 
 export default function UserInfo() {
+  const user = useUserInfoStore((state) => state.user);
   const [isShow, setIsShow] = useState(false);
   const navigate = useNavigate();
 
@@ -93,7 +94,7 @@ export default function UserInfo() {
   return (
     <UserWrapper>
       <User type="button" onClick={handleToggleBtn}>
-        <img src={profileImg} alt="프로필 이미지" />
+        <img src={user.image} alt="프로필 이미지" />
       </User>
       {isShow && (
         <UserLinks>
@@ -101,7 +102,7 @@ export default function UserInfo() {
             <Link to="/profile">프로필 보기</Link>
           </UserLinkItem>
           <UserLinkItem>
-            <Link to="/profile">계정 설정</Link>
+            <Link to="/account">계정 설정</Link>
           </UserLinkItem>
           <UserLinkItem>
             <button type="button" onClick={handleLogout}>
