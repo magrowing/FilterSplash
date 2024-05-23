@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { FormWrapper, ImageBox, Switcher, Title } from '../styles/common/auth';
+import {
+  FormAuth,
+  FormWrapper,
+  ImageBox,
+  Switcher,
+  Title,
+} from '../styles/common/auth';
 
 import { FirebaseError } from 'firebase/app';
 import { createUser } from '../firebase/firebaseApi';
@@ -102,7 +108,7 @@ export default function CreateAccount() {
           이미 계정이 있으신가요? <Link to="/login">로그인</Link>
         </Switcher>
       </div>
-      <form onSubmit={onsubmit}>
+      <FormAuth onSubmit={onsubmit}>
         <TextField
           label="이메일"
           type="text"
@@ -147,7 +153,7 @@ export default function CreateAccount() {
         />
         {error !== '' && <ErrorBox text={error} />}
         <Button type="submit" text={'회원가입'} />
-      </form>
+      </FormAuth>
       {isLoading && <LoadingScreen />}
     </FormWrapper>
   );

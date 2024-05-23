@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import {
+  FormAuth,
   FormWrapper,
   ImageBox,
   Title,
@@ -67,7 +68,7 @@ export default function FindPassword() {
           링크를 보내드립니다.
         </Switcher>
       </div>
-      <form onSubmit={onsubmit}>
+      <FormAuth onSubmit={onsubmit}>
         <TextField
           label="이메일"
           type="text"
@@ -83,7 +84,7 @@ export default function FindPassword() {
         </SwitcherSmall>
         {error !== '' && <ErrorBox text={error} />}
         <Button type="submit" text={'비밀번호 재설정'} />
-      </form>
+      </FormAuth>
       {isLoading && <LoadingScreen />}
     </FormWrapper>
   );

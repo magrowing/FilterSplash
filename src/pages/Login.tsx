@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import {
+  FormAuth,
   FormWrapper,
   ImageBox,
   Title,
@@ -79,7 +80,7 @@ export default function Login() {
           계정이 없으세요? <Link to="/create-account">회원가입</Link>
         </Switcher>
       </div>
-      <form onSubmit={onsubmit}>
+      <FormAuth onSubmit={onsubmit}>
         <TextField
           label="이메일"
           type="text"
@@ -106,7 +107,7 @@ export default function Login() {
         </SwitcherSmall>
         {error !== '' && <ErrorBox text={error} />}
         <Button type="submit" text={'로그인'} />
-      </form>
+      </FormAuth>
       {isLoading && <LoadingScreen />}
     </FormWrapper>
   );

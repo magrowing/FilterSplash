@@ -47,3 +47,8 @@ export const SwitcherSmall = styled(Switcher)`
     margin-left: 0.6rem;
   }
 `;
+
+export const FormAuth = styled.form`
+  max-width: 40rem;
+  width: 100%;
+`
