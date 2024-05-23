@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 
@@ -11,7 +11,7 @@ const UserWrapper = styled.div`
   position: relative;
 `;
 
-const User = styled.button`
+const UserProfile = styled.button`
   width: 3.2rem;
   height: 3.2rem;
   padding: 0;
@@ -24,7 +24,7 @@ const User = styled.button`
   }
 `;
 
-const UserLinks = styled.ul`
+const AccountDropdown = styled.ul`
   position: absolute;
   top: 4rem;
   right: 0;
@@ -36,7 +36,7 @@ const UserLinks = styled.ul`
   overflow: hidden;
 `;
 
-const UserLinkItem = styled.li`
+const AccountDropdownItem = styled.li`
   font-size: ${(props) => props.theme.fonts.bodySmall};
   color: ${(props) => props.theme.colors.secondary};
 
@@ -48,29 +48,22 @@ const UserLinkItem = styled.li`
     background-color: #eee;
     color: ${(props) => props.theme.colors.primary};
   }
+`;
 
-  a {
-    display: block;
-    width: 100%;
-    color: inherit;
-    padding: 0.8rem 1rem;
-  }
+const AccountDropdownBtn = styled.button`
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  font-size: inherit;
+  color: inherit;
+  padding: 0.8rem 1rem;
 
-  button {
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 100%;
-    font-size: inherit;
-    color: inherit;
-    padding: 0.8rem 1rem;
-
-    svg {
-      width: 1.6rem;
-      height: 1.6rem;
-      margin-right: 0.6rem;
-    }
+  svg {
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-right: 0.6rem;
   }
 `;
 
@@ -79,7 +72,7 @@ export default function UserInfo() {
   const [isShow, setIsShow] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
+  const handleLogoutBtn = async () => {
     const isLogoutConfirm = confirm('정말로 로그아웃을 하시겠습니까?');
     if (isLogoutConfirm) {
       await auth.signOut();
@@ -91,21 +84,36 @@ export default function UserInfo() {
     setIsShow(!isShow);
   };
 
+  const handleLinkBtn = (path: string) => {
+    setIsShow(false);
+    navigate(`/${path}`);
+  };
+
   return (
     <UserWrapper>
-      <User type="button" onClick={handleToggleBtn}>
+      <UserProfile type="button" onClick={handleToggleBtn}>
         <img src={user.image} alt="프로필 이미지" />
-      </User>
+      </UserProfile>
       {isShow && (
-        <UserLinks>
-          <UserLinkItem>
-            <Link to="/profile">프로필 보기</Link>
-          </UserLinkItem>
-          <UserLinkItem>
-            <Link to="/account">계정 설정</Link>
-          </UserLinkItem>
-          <UserLinkItem>
-            <button type="button" onClick={handleLogout}>
+        <AccountDropdown>
+          <AccountDropdownItem>
+            <AccountDropdownBtn
+              type="button"
+              onClick={() => handleLinkBtn('profile')}
+            >
+              프로필 보기
+            </AccountDropdownBtn>
+          </AccountDropdownItem>
+          <AccountDropdownItem>
+            <AccountDropdownBtn
+              type="button"
+              onClick={() => handleLinkBtn('account')}
+            >
+              계정 설정
+            </AccountDropdownBtn>
+          </AccountDropdownItem>
+          <AccountDropdownItem>
+            <AccountDropdownBtn type="button" onClick={handleLogoutBtn}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
@@ -124,9 +132,9 @@ export default function UserInfo() {
                 />
               </svg>
               로그아웃
-            </button>
-          </UserLinkItem>
-        </UserLinks>
+            </AccountDropdownBtn>
+          </AccountDropdownItem>
+        </AccountDropdown>
       )}
     </UserWrapper>
   );
