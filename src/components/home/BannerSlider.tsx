@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
+import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 
 const bannerDate = [
   {
@@ -91,6 +92,7 @@ export default function BannerSlider() {
     <Wrapper>
       <Swiper
         className="mySwiper"
+        effect={'fade'}
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
@@ -99,7 +101,7 @@ export default function BannerSlider() {
         pagination={{
           clickable: true,
         }}
-        modules={[Pagination, Autoplay]}
+        modules={[EffectFade, Pagination, Autoplay]}
       >
         {bannerDate.map((item) => {
           const key = `banner-image-${item.id}`;
