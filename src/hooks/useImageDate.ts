@@ -25,6 +25,7 @@ export default function useImageDate() {
           query,
           page,
           per_page: PER_PAGE,
+          lang: 'ko',
         },
       });
 
