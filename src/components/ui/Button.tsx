@@ -5,7 +5,7 @@ type ButtonProps = {
   type: 'button' | 'submit' | 'reset';
   text?: string;
   children?: ReactNode;
-  btnStyle: string;
+  btnStyle?: string;
   onClick?: () => void;
 };
 
