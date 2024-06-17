@@ -1,12 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 
 import styled from 'styled-components';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 import { useUserInfoStore } from '../../stores/useUserInfoStore';
 import { useUserImageStore } from '../../stores/useImageStore';
 
-const Wrapper = styled.ul`
+const Wrapper = styled.div`
   position: fixed;
   top: 6.6rem;
   left: 0%;
@@ -19,9 +26,18 @@ const Wrapper = styled.ul`
   gap: 2rem;
   border-bottom: 1px solid ${(props) => props.theme.colors.third};
   background-color: ${(props) => props.theme.colors.baseWhite};
+
+  .navSlider {
+    margin: 0 auto;
+
+    .swiper-slide {
+      width: auto;
+      margin: 0 1rem;
+    }
+  }
 `;
 
-const NavItem = styled.li`
+const NavItem = styled.div`
   a {
     display: block;
     width: 100%;
@@ -65,11 +81,23 @@ export default function LocalNavigation() {
     });
   }, [param.id]);
 
-  const navLink = categories.map((item: string, index: number) => (
-    <NavItem key={`${item}-${index}`}>
-      <NavLink to={`/${trimString(item)}`}>{item}</NavLink>
-    </NavItem>
-  ));
-
-  return <Wrapper>{navLink}</Wrapper>;
+  return (
+    <Wrapper>
+      <Swiper
+        className="navSlider"
+        slidesPerView={'auto'}
+        freeMode={true}
+        navigation={true}
+        modules={[Navigation]}
+      >
+        {categories.map((item: string, index: number) => (
+          <SwiperSlide key={`${item}-${index}`}>
+            <NavItem>
+              <NavLink to={`/${trimString(item)}`}>{item}</NavLink>
+            </NavItem>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </Wrapper>
+  );
 }
