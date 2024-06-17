@@ -1,27 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { auth, dbService } from '../../firebase/firebase';
 import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 
 import Card from './Card';
-import { CardListWrapper } from '../../styles/common/list';
-
+import Spinner from '../ui/Spinner';
 import DetailDialog from '../common/DetailDialog';
+import { CardListWrapper } from '../../styles/common/list';
 
 import useImageDate from '../../hooks/useImageDate';
 
 import { useBookmarkStore } from '../../stores/useSettingBookmarkStore';
+import { useUserImageStore } from '../../stores/useImageStore';
 
 import { CardDTO, initialCardDTO } from '../../types/card';
 
 export default function CardList() {
   const [isOpen, setOpen] = useState(false);
   const [detailData, setDetailData] = useState<CardDTO>(initialCardDTO);
+
+  const target = useRef<HTMLDivElement | null>(null);
+
   const user = auth.currentUser;
-  const cardData = useImageDate();
+
+  const { imageDate, hasMore } = useImageDate();
+
   const bookmarkData = useBookmarkStore((state) => state.bookmarkData);
   const { setBookmarkData } = useBookmarkStore((state) => state.actions);
+  const { setScrollPage } = useUserImageStore((state) => state.actions);
 
   /**
    * firebase로 부터 bookmark 데이터 가져오기
@@ -89,13 +96,26 @@ export default function CardList() {
   };
 
   useEffect(() => {
+    window.scroll(0, 0);
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setScrollPage();
+      }
+    });
+
     userSettingChk();
-  }, []);
+    if (!target.current) return;
+    observer.observe(target.current);
+
+    return () => {
+      if (target.current) observer.unobserve(target.current);
+    };
+  }, [target.current]);
 
   return (
     <>
       <CardListWrapper>
-        {cardData.results.map((card: CardDTO) => (
+        {imageDate.map((card: CardDTO) => (
           <Card
             key={card.id}
             data={card}
@@ -104,6 +124,11 @@ export default function CardList() {
           />
         ))}
       </CardListWrapper>
+      {hasMore && (
+        <div ref={target}>
+          <Spinner />
+        </div>
+      )}
       {isOpen && (
         <DetailDialog
           data={detailData}

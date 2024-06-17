@@ -5,17 +5,17 @@ import axios from 'axios';
 
 import { useUserImageStore } from '../stores/useImageStore';
 
-import { initImageData, ImageData } from '../types/card';
+import { CardDTO } from '../types/card';
 
 const API_URL = 'https://api.unsplash.com/search/photos';
 const API_KEY = '2kIVyFKuQdmcjm4wkWYAS1jjR874aoAMGE64ci4Cevc';
 const PER_PAGE = 30;
 
-
-export default  function useImageDate() {
-  const [imageDate, setImageDate] = useState<ImageData>(initImageData); 
-  const page = useUserImageStore((state) => state.page); 
-  const query = useUserImageStore((state) => state.query); 
+export default function useImageDate() {
+  const [imageDate, setImageDate] = useState<CardDTO[]>([]);
+  const page = useUserImageStore((state) => state.page);
+  const query = useUserImageStore((state) => state.query);
+  const [hasMore, setHasMore] = useState(true);
 
   const getApiDate = async () => {
     try {
@@ -28,11 +28,22 @@ export default  function useImageDate() {
         },
       });
 
-      if(res.status === 200){
+      if (res.status === 200) {
         console.log(res.data);
-        setImageDate(res.data);
+        console.log(page);
+
+        if (page === 1) {
+          setImageDate([...res.data.results]);
+        } else {
+          setImageDate((prev) => [...prev, ...res.data.results]);
+        }
+
+        if (page === res.data.total_pages) {
+          setHasMore(false);
+        } else {
+          setHasMore(true);
+        }
       }
-    
     } catch {
       console.log('Unsplash Date fetching error');
     }
@@ -42,5 +53,5 @@ export default  function useImageDate() {
     getApiDate();
   }, [page, query]);
 
-  return imageDate
+  return { imageDate, hasMore };
 }

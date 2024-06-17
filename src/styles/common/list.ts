@@ -4,6 +4,8 @@ export const CardListWrapper = styled.ul`
   width: 100%;
   columns: 4;
   column-gap: 2rem;
+  min-height: 100vh;
+  margin-bottom: 2rem;
 
   @media screen and (max-width: 1440px) {
     columns: 3;
@@ -16,14 +18,14 @@ export const CardItem = styled.li`
   margin-bottom: 1rem;
   break-inside: avoid;
 
-&:hover{
-  > div {
-    opacity: 1;
+  &:hover {
+    > div {
+      opacity: 1;
+    }
+    > dl {
+      opacity: 1;
+    }
   }
-  > dl{
-    opacity: 1;
-  }
-}
 
   @media screen and (max-width: 1440px) {
     margin-bottom: 2rem;
@@ -38,7 +40,7 @@ export const Img = styled.img`
   object-fit: cover;
 `;
 
-export const OverlayBox  = styled.div`
+export const OverlayBox = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -48,11 +50,11 @@ export const OverlayBox  = styled.div`
   padding: 2rem;
   background-color: rgba(0, 0, 0, 0.4);
   opacity: 0;
-`
+`;
 
 export const UserInfo = styled.dl`
   position: absolute;
-  bottom: 2rem; 
+  bottom: 2rem;
   left: 2rem;
   z-index: 2;
   width: 100%;
@@ -75,7 +77,7 @@ export const UserInfo = styled.dl`
 
 export const ButtonBox = styled.div`
   position: absolute;
-  top: 2rem; 
+  top: 2rem;
   right: 2rem;
   z-index: 2;
   display: flex;
