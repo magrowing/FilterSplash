@@ -7,6 +7,7 @@ import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import Card from './Card';
 import Spinner from '../ui/Spinner';
 import DetailDialog from '../common/DetailDialog';
+import TopButton from '../common/TopButton';
 import { CardListWrapper } from '../../styles/common/list';
 
 import useImageDate from '../../hooks/useImageDate';
@@ -136,6 +137,7 @@ export default function CardList() {
           handleAddBookmark={handleAddBookmark}
         />
       )}
+      <TopButton />
     </>
   );
 }

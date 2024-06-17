@@ -29,9 +29,6 @@ export default function useImageDate() {
       });
 
       if (res.status === 200) {
-        console.log(res.data);
-        console.log(page);
-
         if (page === 1) {
           setImageDate([...res.data.results]);
         } else {
