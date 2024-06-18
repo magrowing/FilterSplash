@@ -103,7 +103,7 @@ function TextField({
           id={idRef.current}
           value={value}
           onChange={handleChange}
-          $valid={isValid}
+          valid={isValid}
         />
         {isShowPw && (
           <PasswordIconBtn

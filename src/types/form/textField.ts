@@ -1,5 +1,5 @@
 export type InputProps = {
-  visible: boolean;
+  valid: boolean;
 };
 
 export type PasswordIconBtnProps = {
