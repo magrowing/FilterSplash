@@ -20,6 +20,9 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.5;
     color: ${(props) => props.theme.colors.primary};
     font-family:'Pretendard Std',system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    min-width: 144rem;
+    margin:  0 auto;
+
   }
 
   a {
@@ -47,6 +50,6 @@ const GlobalStyle = createGlobalStyle`
       word-break: keep-all;
     }
   }
-`; 
+`;
 
 export default GlobalStyle;
