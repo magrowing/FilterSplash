@@ -1,14 +1,95 @@
+# FilterSplash
 
-### 개발환경세팅
+## 🎯 목표
 
-1. 프로젝트 환경설정(vite를 활용한 React 프로젝트)설치 : `npm create vite@latest`
-2. React Router 설치 : `npm i react-router-dom@6.14.2`
-3. style reset 설치: `npm i styled-reset`
-4. styled-component 설치: `npm i styled-components@6.0.7`
-5. styled-component typescript 사용하기 위해 설치: `npm i -D @types/styled-components`
-6. firebase 프로젝트 생성 후 설치: `npm install firebase@10.1.0`
-7. React 중앙집중식 상태관리 라이브러리 Zustand 설치 : `npm i zustand`
-8. 테스트 도구 Jest 및  React Testing Library :
-  `npm i -D jest @types/jest ts-node @swc/core @swc/jest`
-  `jest-environment-jsdom \`
-  `@testing-library/react @testing-library/jest-dom@5.16.4`
+Unsplash API와 Firebase를 활용한 Unsplash 클론 코딩 프로젝트입니다. 이 프로젝트의 주요 목표는 프론트엔드 개발 역량을 강화하는 것입니다. Firebase를 사용하여 웹 서버를 구축하고, 데이터베이스, 인증, 스토리지 등을 통합하여 웹 서비스의 흐름을 종합적으로 이해하고 구현하는 데 중점을 두었습니다.
+
+## ⚙️ 사용 기술
+
+1. React
+2. React Router
+3. Typescript
+4. styled-component
+5. zustand
+6. Firebase
+
+## 🖥️ 결과물 URL
+
+- [magrowing's FilterSplash App](https://filter-splash.vercel.app/login)
+- 확인용 계정
+  - Id : <test@gmail.com>
+  - Password : test1234@!
+
+## 🕹️ 페이지별 기능 구현
+
+### 로그인
+
+- 서비스 접속시 초기화면으로 로그인 페이지 노출됩니다.
+  - 해당 서비스는 로그인 후에 사용 가능합니다.
+- 이메일 주소와 비밀번호 입력시 유효성 검사가 진행되고 실패한 경우 각 경고 문구가 노출됩니다.
+  - 이메일의 경우 : 주소의 형식이 맞지 않을 시
+  - 비밀번호의 경우 : 8글자 이상 16글자 이하로, 영문, 숫자, 특수문자(@$!%\*#?&) 1개씩 사용
+  - 눈 아이콘 클릭시 입력한 비밀번호 노출됩니다.
+- 작성 완료 후, 로그인 버튼 클릭시 회원인증이 완료되면 메인페이지 노출됩니다.
+  - 회원인증이 실패하면 (가입 않은 유저, 이메일과 비밀번호가 잘못 입력되었을 경우) 경고 문구 노출됩니다.
+
+| 로그인                                                                                  |
+| --------------------------------------------------------------------------------------- |
+| ![login](https://github.com/magrowing/Github-User-Content/blob/main/login.gif?raw=true) |
+
+### 회원가입
+
+- 이메일주소, 이름, 비밀번호, 비밀번호 확인 입력시 유효성 검사가 진행되고 실패한 경우 각 경오 문구가 노출됩니다.
+  - 이메일의 경우 : 주소의 형식이 맞지 않을 시
+  - 이름의 경우 : 2글자 이상, 12글자 이하
+  - 비밀번호의 경우 : 8글자 이상 16글자 이하로, 영문, 숫자, 특수문자(@$!%\*#?&) 1개씩 사용
+  - 눈 아이콘 클릭시 입력한 비밀번호 노출됩니다.
+- 작성 완료 후, 회원가입 버튼 클릭시 이메일을 통해 기존 회원 인증에 대한 확인이 완료되면 로그인 페이지가 노출됩니다.
+  - 기존 회원인증일 경우 회원가입은 실패하여 `이미 사용 중인 이메일입니다.`라는 안내 문구 노출됩니다.
+
+| 로그인                                                                                 |
+| -------------------------------------------------------------------------------------- |
+| ![login](https://github.com/magrowing/Github-User-Content/blob/main/join.gif?raw=true) |
+
+### 카테고리 지정
+
+- 첫 회원가입시 카테고리 지정 팝업이 노출됩니다.
+- 자동으로 카테고리를 생성해주는 기능과 사용자가 직접 입력해서 카테고리를 지정할 수 있습니다.
+
+| 카테고리 자동 생성                                                                                      |
+| ------------------------------------------------------------------------------------------------------- |
+| ![category auto](https://github.com/magrowing/Github-User-Content/blob/main/auto_category.gif?raw=true) |
+
+| 카테고리 수동 생성                                                                            |
+| --------------------------------------------------------------------------------------------- |
+| ![category](https://github.com/magrowing/Github-User-Content/blob/main/category.gif?raw=true) |
+
+### 이미지 검색
+
+- 키워드 검색시 해당 키워드의 이미지가 노출됩니다.
+- 무한 스크롤 기능으로 인해 스크롤 이동시 이미지가 자동으로 추가됩니다.
+  - 이미지의 갯수가 많아지면 페이지의 상단으로 이동 할 수 있는 버튼이 노출됩니다.
+
+### 북마크
+
+- 이미지 hover시 북마크 할 수 있는 버튼이 노출됩니다.
+  - 북마크 된 이미지의 경우 초록색의 북마크 아이콘이 표시 되어 노출됩니다.
+- 북마크로 지정된 이미지는 `collection` 버튼 클릭시 해당 페이지로 이동됩니다.
+  - `collection` 페이지내에서 북마크를 제거할 수 있습니다.
+
+| 북마크 추가                                                                                       |
+| ------------------------------------------------------------------------------------------------- |
+| ![bookmark](https://github.com/magrowing/Github-User-Content/blob/main/bookmark_add.gif?raw=true) |
+
+| 북마크 제거                                                                                          |
+| ---------------------------------------------------------------------------------------------------- |
+| ![bookmark](https://github.com/magrowing/Github-User-Content/blob/main/bookmark_remove.gif?raw=true) |
+
+### 프로필
+
+- 유저정보중 이름과 프로필 이미지가 변경이 가능하며, 지정한 카테고리를 수정할 수 있습니다.
+  - 프로필 이미지는 2MB 이하만 업로드가 가능합니다.
+
+| 프로필                                                                                      |
+| ------------------------------------------------------------------------------------------- |
+| ![profile](https://github.com/magrowing/Github-User-Content/blob/main/profile.gif?raw=true) |
