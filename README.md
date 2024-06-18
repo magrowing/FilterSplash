@@ -15,7 +15,7 @@ Unsplash API와 Firebase를 활용한 Unsplash 클론 코딩 프로젝트입니�
 
 ## 🖥️ 결과물 URL
 
-- [magrowing's FilterSplash App](https://filter-splash.vercel.app/login)
+- [magrowing's FilterSplash App](https://filter-splash.vercel.app/)
 - 확인용 계정
   - Id : <test@gmail.com>
   - Password : test1234@!
@@ -47,7 +47,7 @@ Unsplash API와 Firebase를 활용한 Unsplash 클론 코딩 프로젝트입니�
 - 작성 완료 후, 회원가입 버튼 클릭시 이메일을 통해 기존 회원 인증에 대한 확인이 완료되면 로그인 페이지가 노출됩니다.
   - 기존 회원인증일 경우 회원가입은 실패하여 `이미 사용 중인 이메일입니다.`라는 안내 문구 노출됩니다.
 
-| 로그인                                                                                 |
+| 회원가입                                                                               |
 | -------------------------------------------------------------------------------------- |
 | ![login](https://github.com/magrowing/Github-User-Content/blob/main/join.gif?raw=true) |
 
