@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -12,6 +13,7 @@ import CardList from '../components/card/CardList';
 
 import { useUserInfoStore } from '../stores/useUserInfoStore';
 import { useUserImageStore } from '../stores/useImageStore';
+import { useSearchStore } from '../stores/useSearchStore';
 
 const IntroWrapper = styled.div`
   display: flex;
@@ -24,6 +26,8 @@ const IntroWrapper = styled.div`
 
 export default function Home() {
   const category = useUserInfoStore((state) => state.category);
+  const setHeaderSearch = useSearchStore((state) => state.setHeaderSearch);
+  const setContentSearch = useSearchStore((state) => state.setContentSearch);
   const { setPage, setQuery } = useUserImageStore((state) => state.actions);
   const param = useParams();
 
@@ -31,6 +35,8 @@ export default function Home() {
     if (!param.id) {
       setQuery('random');
       setPage(1);
+      setHeaderSearch('');
+      setContentSearch('');
     }
   }, [param.id]);
 

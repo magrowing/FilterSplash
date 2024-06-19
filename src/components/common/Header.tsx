@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import SearchBar from '../header/SearchBar';
 import UserInfo from '../header/UserInfo';
+import { useSearchStore } from '../../stores/useSearchStore';
 
 const HeaderWrapper = styled.header`
   position: fixed;
@@ -78,6 +79,9 @@ const BtnLinkWrapper = styled.nav`
 `;
 
 export default function Header() {
+  const headerSearch = useSearchStore((state) => state.headerSearch);
+  const setHeaderSearch = useSearchStore((state) => state.setHeaderSearch);
+
   return (
     <HeaderWrapper>
       {/* 로고 영역 */}
@@ -87,7 +91,7 @@ export default function Header() {
         </Link>
       </Logo>
       {/* searchBar 영역 */}
-      <SearchBar />
+      <SearchBar search={headerSearch} setSearch={setHeaderSearch} />
       {/* navLink 영역 */}
       <AdLinkWrapper>
         <Link to="https://unsplash.com/ko/%EA%B4%91%EA%B3%A0" target="_blank">

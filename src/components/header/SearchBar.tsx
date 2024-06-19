@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styled, { css } from 'styled-components';
@@ -82,8 +82,13 @@ const SearchButton = styled.button<styledProps>`
     `}
 `;
 
-export default function SearchBar({ type }: { type?: string }) {
-  const [search, setSearch] = useState('');
+type SearchBarProps = {
+  type?: string;
+  search: string;
+  setSearch: (value: string) => void;
+};
+
+export default function SearchBar({ type, search, setSearch }: SearchBarProps) {
   const { setPage, setQuery } = useUserImageStore((state) => state.actions);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigation = useNavigate();
